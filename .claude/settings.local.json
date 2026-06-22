@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd *)",
+      "Bash(awk '/sticky-nav__menu/{c=1} c{print NR\": \"$0} /<\\\\/ul>/{if\\(c\\){c=0; exit}}' dist/react-pages/home.html)",
+      "Bash(awk 'NR>=144 && NR<=175' dist/react-pages/home.html)",
+      "Bash(python3 -)",
+      "Bash(awk '/sticky-nav__menu/{c=1} c{print} /<\\\\/ul>/{if\\(c\\){c=0;exit}}' dist/react-pages/home.html)",
+      "Bash(awk '{print $2, $11, $12, $13, $14}')",
+      "Bash(git config *)",
+      "Bash(gh auth *)",
+      "Bash(git ls-remote *)",
+      "Bash(echo \"exit=$?\")",
+      "Bash(git init *)",
+      "Bash(git checkout *)",
+      "Bash(git add *)",
+      "Bash(git -c user.name=jinsoo -c user.email=sbbc212@gmail.com commit -q -m 'Replace logo with made make material mark; add 브랜드 스토리 nav item *)",
+      "Bash(git -c user.name=jinsoo -c user.email=sbbc212@gmail.com commit -q --amend -m 'Replace logo with made make material mark; add 브랜드 스토리 nav item *)"
+    ]
+  }
+}
