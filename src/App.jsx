@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import LegacyPage from './components/LegacyPage.jsx';
+import BrandStoryFrame from './routes/BrandStoryFrame.jsx';
 import ProductDetail from './routes/ProductDetail.jsx';
 
 const routes = {
@@ -24,6 +25,8 @@ export default function App() {
       <Route path="/inspiration/*" element={<Navigate to="/inspiration/references" replace />} />
       <Route path="/for-professionals" element={<LegacyPage source={routes.professionals} />} />
       <Route path="/for-professionals/*" element={<Navigate to="/for-professionals" replace />} />
+      <Route path="/about-us/brand-story" element={<BrandStoryFrame />} />
+      <Route path="/about-us/*" element={<Navigate to="/about-us/brand-story" replace />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
