@@ -121,14 +121,51 @@ function runScript(script) {
   });
 }
 
-function rerunDeferredSliders(scripts) {
-  if (typeof window.tinySlider !== 'function') {
+function getSliderContainers(text = '') {
+  return Array.from(text.matchAll(/container:\s*['"`]([^'"`]+)['"`]/g), (match) => match[1]);
+}
+
+function needsSliderInit(selector) {
+  const element = document.querySelector(selector);
+  return Boolean(element && !element.classList.contains('tns-slider') && !element.closest('.tns-outer'));
+}
+
+function scheduleDeferredSliders(scripts) {
+  const sliderScripts = scripts
+    .filter((script) => !script.src && script.textContent?.includes('tinySlider('))
+    .map((script) => ({
+      text: script.textContent,
+      containers: getSliderContainers(script.textContent)
+    }));
+
+  if (!sliderScripts.length) {
     return;
   }
 
-  scripts
-    .filter((script) => !script.src && script.textContent?.includes('tinySlider('))
-    .forEach((script) => appendInlineScript(script.textContent));
+  let attempts = 0;
+
+  function runPending() {
+    attempts += 1;
+
+    if (typeof window.tinySlider !== 'function') {
+      if (attempts < 20) {
+        window.setTimeout(runPending, 100);
+      }
+      return;
+    }
+
+    sliderScripts.forEach(({ text, containers }) => {
+      if (!containers.length || containers.some(needsSliderInit)) {
+        appendInlineScript(text);
+      }
+    });
+
+    if (attempts < 5 && sliderScripts.some(({ containers }) => containers.some(needsSliderInit))) {
+      window.setTimeout(runPending, 150);
+    }
+  }
+
+  runPending();
 }
 
 function replayLegacyLoadEvents() {
@@ -183,7 +220,7 @@ export default function LegacyPage({ source }) {
               await runScript(script);
             }
             if (!cancelled) {
-              rerunDeferredSliders(scripts);
+              scheduleDeferredSliders(scripts);
               replayLegacyLoadEvents();
             }
           }, 0);
