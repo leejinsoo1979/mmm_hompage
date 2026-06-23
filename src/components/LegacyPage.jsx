@@ -12,8 +12,6 @@ const allowedRoutes = new Set([
   '/about-us/brand-story'
 ]);
 
-const STYLESHEET_LOAD_TIMEOUT_MS = 5000;
-
 function normalizePath(pathname) {
   return pathname.replace(/\/index\.html$/, '').replace(/\.html$/, '').replace(/\/$/, '') || '/';
 }
@@ -85,7 +83,6 @@ function waitForStylesheet(node) {
     function done() {
       if (!settled) {
         settled = true;
-        window.clearTimeout(timeout);
         window.clearInterval(poll);
         node.removeEventListener('load', done);
         node.removeEventListener('error', done);
@@ -93,7 +90,6 @@ function waitForStylesheet(node) {
       }
     }
 
-    const timeout = window.setTimeout(done, STYLESHEET_LOAD_TIMEOUT_MS);
     const poll = window.setInterval(() => {
       try {
         if (node.sheet) {
