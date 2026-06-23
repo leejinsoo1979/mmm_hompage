@@ -39,7 +39,8 @@
       "Bash(qlmanage -t -s 1400 -o /tmp /tmp/lk.svg)",
       "Bash(sips -g pixelWidth -g pixelHeight -g hasAlpha formani.com/favicon-32x32.png)",
       "Bash(git -c user.name=\"jinsoo\" -c user.email=\"sbbc212@gmail.com\" commit -q -m \"Favicon: replace with llllll bar symbol \\(svg adaptive + 16/32/apple-touch png\\)\")",
-      "Bash(git -c user.name=\"jinsoo\" -c user.email=\"sbbc212@gmail.com\" commit -q -m \"Logo: widen gap between bar symbol and wordmark\")"
+      "Bash(git -c user.name=\"jinsoo\" -c user.email=\"sbbc212@gmail.com\" commit -q -m \"Logo: widen gap between bar symbol and wordmark\")",
+      "Bash(git -c user.name=\"jinsoo\" -c user.email=\"sbbc212@gmail.com\" commit -q -m \"Add full logo lockup fixed at bottom-right \\(mix-blend for any background\\)\")"
     ]
   }
 }
