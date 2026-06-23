@@ -12,6 +12,8 @@ const allowedRoutes = new Set([
   '/about-us/brand-story'
 ]);
 
+const STYLESHEET_LOAD_TIMEOUT_MS = 5000;
+
 function normalizePath(pathname) {
   return pathname.replace(/\/index\.html$/, '').replace(/\.html$/, '').replace(/\/$/, '') || '/';
 }
@@ -56,7 +58,7 @@ function addHeadNode(node) {
         : null;
 
   if (key && document.head.querySelector(`[data-legacy-key="${CSS.escape(key)}"]`)) {
-    return;
+    return document.head.querySelector(`[data-legacy-key="${CSS.escape(key)}"]`);
   }
 
   const clone = node.cloneNode(true);
@@ -64,6 +66,57 @@ function addHeadNode(node) {
     clone.setAttribute('data-legacy-key', key);
   }
   document.head.appendChild(clone);
+  return clone;
+}
+
+function waitForStylesheet(node) {
+  if (node.tagName !== 'LINK' || !node.href || node.rel.toLowerCase() !== 'stylesheet') {
+    return Promise.resolve();
+  }
+
+  const stylesheetUrl = new URL(node.href, window.location.href);
+  if (stylesheetUrl.origin !== window.location.origin) {
+    return Promise.resolve();
+  }
+
+  return new Promise((resolve) => {
+    let settled = false;
+
+    function done() {
+      if (!settled) {
+        settled = true;
+        window.clearTimeout(timeout);
+        window.clearInterval(poll);
+        node.removeEventListener('load', done);
+        node.removeEventListener('error', done);
+        resolve();
+      }
+    }
+
+    const timeout = window.setTimeout(done, STYLESHEET_LOAD_TIMEOUT_MS);
+    const poll = window.setInterval(() => {
+      try {
+        if (node.sheet) {
+          done();
+        }
+      } catch {
+        done();
+      }
+    }, 50);
+
+    try {
+      if (node.sheet) {
+        done();
+        return;
+      }
+    } catch {
+      done();
+      return;
+    }
+
+    node.addEventListener('load', done, { once: true });
+    node.addEventListener('error', done, { once: true });
+  });
 }
 
 function addMetaNode(node) {
@@ -205,7 +258,8 @@ export default function LegacyPage({ source }) {
 
         document.title = doc.title || 'FORMANI React Mirror';
         doc.head.querySelectorAll('meta').forEach(addMetaNode);
-        doc.head.querySelectorAll('link[rel="stylesheet"], style').forEach(addHeadNode);
+        const styleNodes = Array.from(doc.head.querySelectorAll('link[rel="stylesheet"], style'), addHeadNode).filter(Boolean);
+        await Promise.all(styleNodes.map(waitForStylesheet));
 
         scripts.forEach((script) => script.remove());
 
