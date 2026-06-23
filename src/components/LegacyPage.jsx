@@ -9,7 +9,9 @@ const allowedRoutes = new Set([
   '/products/detail',
   '/inspiration/references',
   '/for-professionals',
-  '/about-us/brand-story'
+  '/about-us/brand-story',
+  '/about-us/contact',
+  '/about-us/points-sale'
 ]);
 
 function normalizePath(pathname) {

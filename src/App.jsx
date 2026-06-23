@@ -8,7 +8,9 @@ const routes = {
   collections: '/collection.html',
   products: '/products/Catalogue.html',
   inspiration: '/inspiration/references.html',
-  professionals: '/for-professionals.html'
+  professionals: '/for-professionals.html',
+  contact: '/about-us/contact.html',
+  pointsSale: '/about-us/points-sale.html'
 };
 
 export default function App() {
@@ -26,6 +28,8 @@ export default function App() {
       <Route path="/for-professionals" element={<LegacyPage source={routes.professionals} />} />
       <Route path="/for-professionals/*" element={<Navigate to="/for-professionals" replace />} />
       <Route path="/about-us/brand-story" element={<BrandStoryFrame />} />
+      <Route path="/about-us/contact" element={<LegacyPage source={routes.contact} />} />
+      <Route path="/about-us/points-sale" element={<LegacyPage source={routes.pointsSale} />} />
       <Route path="/about-us/*" element={<Navigate to="/about-us/brand-story" replace />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
