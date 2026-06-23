@@ -121,7 +121,7 @@ function waitForStylesheet(node) {
   });
 }
 
-function useFormaniStyles() {
+function useLegacyDetailStyles() {
   const [stylesReady, setStylesReady] = useState(false);
 
   useEffect(() => {
@@ -131,15 +131,15 @@ function useFormaniStyles() {
     let cancelled = false;
     const links = [
       {
-        id: 'formani-framework-css',
+        id: 'legacy-detail-framework-css',
         href: '/application/themes/ztheme/dist/css/framework.min.css',
       },
       {
-        id: 'formani-fontawesome-css',
+        id: 'legacy-detail-fontawesome-css',
         href: '/concrete/css/fontawesome/all.css',
       },
       {
-        id: 'formani-typekit-css',
+        id: 'legacy-detail-typekit-css',
         href: 'https://use.typekit.net/kgl3zjy.css',
       },
     ];
@@ -176,14 +176,13 @@ function useFormaniStyles() {
   return stylesReady;
 }
 
-function FormaniLogo() {
+function BrandLogo() {
   return (
     <div className="logo">
-      <Link to="/" aria-label="FORMANI home">
-        <svg x="0px" y="0px" viewBox="0 0 413.9 56.7" xmlSpace="preserve">
-          <path d="M376.3,55.8h9.6V0.9h-9.6V55.8z M311,55.8h9.5v-39l30.2,39h8.1V0.9h-9.5v37.9L320,0.9H311V55.8z M262.8,34l9.4-21.9 l9.5,21.9H262.8z M243.7,55.8h9.9l5.6-13.2h25.9l5.6,13.2h10.2L276.8,0.5h-8.9L243.7,55.8z M179.7,55.8h9.5V16.6l17.1,25.7h0.3 L224,16.4v39.3h9.6V0.9h-10.3l-16.7,25.9L190,0.9h-10.3V55.8z M129.9,28.1V9.7h14c7.1,0,11.4,3.2,11.4,9.1V19 c0,5.6-4.4,9.2-11.3,9.2H129.9z M120.2,55.8h9.6V36.6h11.9h0.2l13.5,19.1h11.4L151.9,35c7.7-2.2,13.1-7.6,13.1-16.6v-0.2 c0-4.8-1.6-8.8-4.5-11.8c-3.5-3.4-8.9-5.5-15.8-5.5h-24.4V55.8z M78.6,47.8c-10.9,0-18.6-8.8-18.6-19.5v-0.2 c0-10.6,7.6-19.3,18.5-19.3C89.3,8.8,97,17.7,97,28.3v0.2C97,39.2,89.4,47.8,78.6,47.8 M78.4,56.7c16.8,0,28.7-12.9,28.7-28.3v-0.2 C107.1,12.8,95.4,0,78.6,0C61.7,0,49.8,12.9,49.8,28.3v0.2C49.8,43.9,61.6,56.7,78.4,56.7 M0,55.8h9.6V33.4h27.6v-8.8H9.6v-15h31.2 V0.9H0V55.8z" />
-          <path d="M403.2,8.5V5.6h2.3c1.1,0,1.8,0.5,1.8,1.4v0c0,0.9-0.7,1.4-1.8,1.4H403.2z M401.4,13.2h1.8V10h1.9h0l2.3,3.2h2.1L407,9.7 c1.3-0.4,2.2-1.3,2.2-2.8v0c0-0.8-0.3-1.5-0.8-1.9c-0.6-0.6-1.6-1-2.8-1h-4.1V13.2z M405,16.8c-4.5,0-7.9-3.5-7.9-7.9v0 c0-4.4,3.4-8,8-8c4.5,0,7.9,3.5,7.9,7.9v0C412.9,13.2,409.5,16.8,405,16.8 M405,17.7c5,0,8.9-4,8.9-8.9v0C413.9,4,410,0,405,0 c-5,0-8.9,4-8.9,8.9v0C396.1,13.7,400,17.7,405,17.7" />
-        </svg>
+      <Link to="/" aria-label="made make material home" className="brand-logo-text">
+        <span>made</span>
+        <span>make</span>
+        <span>material</span>
       </Link>
     </div>
   );
@@ -192,7 +191,7 @@ function FormaniLogo() {
 function Header({ detailPath }) {
   return (
     <>
-      <FormaniLogo />
+      <BrandLogo />
       <div className="sticky-nav__short-links hlink">
         <Link to="/catalogue-request?bron=Webheader"><span data-hover="Get catalogue">Get catalogue</span></Link>
         <br />
@@ -254,7 +253,7 @@ function Arrow() {
 }
 
 export default function ProductDetail() {
-  const stylesReady = useFormaniStyles();
+  const stylesReady = useLegacyDetailStyles();
 
   const params = useParams();
   const navigate = useNavigate();
@@ -508,7 +507,7 @@ export default function ProductDetail() {
             <div className="layout-grid product-detail product-detail__footer layout-grid--mt0">
               <div>
                 <h3 className="product-detail__collection-heading">
-                  {collection || 'FORMANI'} {designer && <span>by {designer}</span>}
+                  {collection || 'made make material'} {designer && <span>by {designer}</span>}
                 </h3>
                 {collection === 'INC' && (
                   <p>The INC series is a total concept collection consisting of <strong>door</strong>, <strong>window</strong>, and <strong>furniture fittings.</strong></p>

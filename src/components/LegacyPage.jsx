@@ -275,7 +275,7 @@ export default function LegacyPage({ source }) {
           ...Array.from(doc.body.querySelectorAll('script'))
         ];
 
-        document.title = doc.title || 'FORMANI React Mirror';
+        document.title = doc.title || 'made make material React Mirror';
         doc.head.querySelectorAll('meta').forEach(addMetaNode);
         const styleNodes = Array.from(doc.head.querySelectorAll('link[rel="stylesheet"], style'), addHeadNode).filter(Boolean);
         await Promise.all(styleNodes.map(waitForStylesheet));

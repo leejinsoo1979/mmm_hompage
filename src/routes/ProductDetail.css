@@ -6,10 +6,20 @@
   cursor: pointer;
 }
 
-.product-detail-react .logo svg {
+.product-detail-react .brand-logo-text {
   display: block;
-  width: 100%;
-  height: auto;
+  color: currentColor;
+  font: 600 16px/1.05 Arial, sans-serif;
+  letter-spacing: 0;
+  text-decoration: none;
+}
+
+.product-detail-react .brand-logo-text span {
+  display: block;
+}
+
+.product-detail-react .brand-logo-text span + span {
+  margin-top: 2px;
 }
 
 .product-detail-react .sticky-nav__menu ul,
