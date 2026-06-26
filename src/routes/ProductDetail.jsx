@@ -206,7 +206,7 @@ function Header({ detailPath }) {
             <ul>
               <li><Link to="/products/Catalogue#category-hardware">hardware</Link></li>
               <li><Link to="/products/Catalogue#category-pannel">pannel</Link></li>
-              <li><Link to="/products/Catalogue#category-presbevel">presbevel</Link></li>
+              <li><Link to="/products/Catalogue#category-presbevel">pressbevel</Link></li>
               <li><Link to="/products/Catalogue#category-antipress">antipress</Link></li>
               <li><Link to="/products/Catalogue#category-bathmatch">bathmatch</Link></li>
               <li><Link to="/products/Catalogue#category-stable-core">stable core</Link></li>
