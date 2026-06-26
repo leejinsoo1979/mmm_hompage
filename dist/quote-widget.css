@@ -5,12 +5,15 @@
 .ccm-page .collection-search-app--catalog .collection-search-app__left-panel.mmm-quote-host{
   padding:0 24px !important;
   margin:0 !important;
+  height:100vh;
   min-height:100vh;
 }
 #mmm-quote{
+  box-sizing:border-box;
   display:flex;
   flex-direction:column;
-  min-height:100vh;
+  height:100vh;
+  min-height:0;
   width:100% !important;
   padding-top:clamp(72px, 7.5vw, 128px) !important;
 }
@@ -28,15 +31,16 @@ main:has(.collection-search-app){ overflow: visible !important; }
   position:sticky;
   top:0;
   align-self:flex-start;
+  height:100vh;
   max-height:100vh;
-  overflow-y:auto;
+  overflow:hidden;
   overflow-x:hidden;
 }
 @media (max-width:991px){
   .collection-search-app__left-panel.mmm-quote-host{
-    position:static; max-height:none; overflow:visible;
+    position:static; height:auto; max-height:none; overflow:visible;
   }
-  #mmm-quote{ min-height:auto; padding-top:24px !important; }
+  #mmm-quote{ height:auto; min-height:auto; padding-top:24px !important; }
 }
 #mmm-quote{ font-family:inherit; color:#1d1d1b; }
 #mmm-quote *{ box-sizing:border-box; }
@@ -54,7 +58,7 @@ main:has(.collection-search-app){ overflow: visible !important; }
 #mmm-quote .q-res .q-res-meta{ font-size:11px; color:#999; }
 #mmm-quote .q-res .q-res-p{ font-size:12px; white-space:nowrap; color:#444; }
 #mmm-quote .q-empty{ padding:14px; font-size:13px; color:#aaa; text-align:center; }
-#mmm-quote .q-items{ margin:8px 0 0; }
+#mmm-quote .q-items{ flex:1 1 auto; margin:8px -8px 0 0; min-height:0; overflow-y:auto; overscroll-behavior:contain; padding-right:8px; }
 #mmm-quote .q-item{ display:grid; grid-template-columns:48px 1fr; gap:2px 10px; padding:12px 0; border-bottom:1px solid #eee; }
 #mmm-quote .q-item .q-i-img{ width:48px; height:48px; grid-row:1 / span 3; background:#f5f5f5; display:flex; align-items:center; justify-content:center; overflow:hidden; }
 #mmm-quote .q-item .q-i-img img{ width:100%; height:100%; object-fit:contain; display:block; }
@@ -64,7 +68,9 @@ main:has(.collection-search-app){ overflow: visible !important; }
 #mmm-quote .q-item .q-i-ctl{ display:flex; align-items:center; gap:10px; margin-top:6px; }
 #mmm-quote .q-item .q-qty{ display:flex; align-items:center; border:1px solid #ddd; border-radius:4px; overflow:hidden; }
 #mmm-quote .q-item .q-qty button{ width:26px; height:26px; border:0; background:#f2f2f2; cursor:pointer; font-size:15px; line-height:1; }
-#mmm-quote .q-item .q-qty input{ width:40px; height:26px; border:0; text-align:center; font-size:13px; }
+#mmm-quote .q-item .q-qty input{ width:40px; height:26px; border:0; padding:0; text-align:center !important; text-align-last:center; font-size:13px; appearance:textfield; -moz-appearance:textfield; }
+#mmm-quote .q-item .q-qty input::-webkit-outer-spin-button,
+#mmm-quote .q-item .q-qty input::-webkit-inner-spin-button{ margin:0; -webkit-appearance:none; }
 #mmm-quote .q-item .q-i-amt{ margin-left:auto; font-weight:600; font-size:14px; white-space:nowrap; }
 #mmm-quote .q-item .q-i-rm{ border:0; background:none; color:#c00; cursor:pointer; font-size:12px; padding:0 2px; }
 #mmm-quote .q-totals{ margin-top:14px; padding-top:12px; border-top:2px solid #1d1d1b; font-size:13px; }

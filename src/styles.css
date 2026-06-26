@@ -73,3 +73,7 @@ body {
   top: 3.7vw !important;
   z-index: 10;
 }
+
+.ccm-page .wishlist-item-icon .fa-heart::before {
+  content: "\f07a" !important;
+}

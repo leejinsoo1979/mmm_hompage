@@ -38,9 +38,9 @@
   font-size: .85em;
 }
 
-.product-detail-react .product-detail-react__heart {
+.product-detail-react .product-detail-react__cart {
   display: inline-block;
-  font-size: 11px;
+  font-size: 10px;
   line-height: 10px;
   transform: translateY(1px);
 }

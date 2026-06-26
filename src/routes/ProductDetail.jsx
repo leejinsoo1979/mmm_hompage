@@ -432,7 +432,7 @@ export default function ProductDetail() {
                   <h2 className="product-detail__description">{getDescription(product)}</h2>
                   <div className="hlink toggle-wishlist" data-itemid={clean(product.product_id)}>
                     <div className={`wishlist-item-icon wishlist-item-icon__detailpage wishlist-item__${clean(product.product_id)}`}>
-                      <span className="product-detail-react__heart" aria-hidden="true">♥</span>
+                      <i className="fa fa-shopping-cart product-detail-react__cart" aria-hidden="true" />
                     </div>
                     <span className="product-detail-react__wishlist"><span data-hover="Add to wishlist">Add to wishlist</span></span>
                   </div>
