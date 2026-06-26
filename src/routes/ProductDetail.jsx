@@ -204,10 +204,12 @@ function Header({ detailPath }) {
           <div />
           <div className="sticky-nav__menu">
             <ul>
-              <li><Link to="/collection">Collections</Link></li>
-              <li><Link to="/products/Catalogue">Products</Link></li>
-              <li><Link to="/inspiration/references">Inspiration</Link></li>
-              <li><Link to="/for-professionals">For design professionals</Link></li>
+              <li><Link to="/products/Catalogue?category=hardware">hardware</Link></li>
+              <li><Link to="/products/Catalogue?category=pannel">pannel</Link></li>
+              <li><Link to="/products/Catalogue?category=presbevel">presbevel</Link></li>
+              <li><Link to="/products/Catalogue?category=antipress">antipress</Link></li>
+              <li><Link to="/products/Catalogue?category=bathmatch">bathmatch</Link></li>
+              <li><Link to="/products/Catalogue?category=stable-core">stable core</Link></li>
             </ul>
           </div>
           <div className="sticky-nav__toggle">
