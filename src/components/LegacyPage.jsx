@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { holdAppBoot, releaseAppBootBeforePaint } from '../utils/appBoot.js';
 
 const allowedRoutes = new Set([
@@ -19,35 +19,50 @@ function normalizePath(pathname) {
   return pathname.replace(/\/index\.html$/, '').replace(/\.html$/, '').replace(/\/$/, '') || '/';
 }
 
-function resolveRoute(pathname, search = '') {
+function resolveRoute(pathname, search = '', hash = '') {
   const path = normalizePath(pathname);
   const lower = path.toLowerCase();
 
   if (allowedRoutes.has(path)) {
-    return path === '/products/catalogue' ? `/products/Catalogue${search}` : `${path}${search}`;
+    return path === '/products/catalogue' ? `/products/Catalogue${search}${hash}` : `${path}${search}${hash}`;
   }
 
   if (lower.startsWith('/collection/')) {
-    return '/collection';
+    return `/collection${hash}`;
   }
 
   if (lower.startsWith('/products/catalogue/')) {
-    return `/products/Catalogue${search}`;
+    return `/products/Catalogue${search}${hash}`;
   }
 
   if (lower.startsWith('/products/detail/')) {
-    return `${path}${search}`;
+    return `${path}${search}${hash}`;
   }
 
   if (lower.startsWith('/inspiration/')) {
-    return '/inspiration/references';
+    return `/inspiration/references${hash}`;
   }
 
   if (lower.startsWith('/for-professionals/')) {
-    return '/for-professionals';
+    return `/for-professionals${hash}`;
   }
 
   return null;
+}
+
+function scrollToHash(hash, behavior = 'smooth') {
+  if (!hash) {
+    return;
+  }
+
+  const target = document.getElementById(hash.slice(1));
+  if (!target) {
+    return;
+  }
+
+  window.setTimeout(() => {
+    target.scrollIntoView({ behavior, block: 'start' });
+  }, 60);
 }
 
 function addHeadNode(node) {
@@ -237,6 +252,7 @@ export default function LegacyPage({ source }) {
   const [isReady, setIsReady] = useState(false);
   const containerRef = useRef(null);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const cacheKey = useMemo(() => `${source}?react=${Date.now()}`, [source]);
 
@@ -284,7 +300,9 @@ export default function LegacyPage({ source }) {
 
         if (!cancelled) {
           setMarkup(doc.body.innerHTML);
-          window.scrollTo(0, 0);
+          if (!window.location.hash) {
+            window.scrollTo(0, 0);
+          }
 
           setTimeout(async () => {
             for (const script of scripts) {
@@ -297,6 +315,7 @@ export default function LegacyPage({ source }) {
               scheduleDeferredSliders(scripts);
               replayLegacyLoadEvents();
               setIsReady(true);
+              scrollToHash(window.location.hash, 'auto');
             }
           }, 0);
         }
@@ -333,7 +352,7 @@ export default function LegacyPage({ source }) {
       }
 
       const url = new URL(href, window.location.origin);
-      const localRoute = url.origin === window.location.origin ? resolveRoute(url.pathname, url.search) : null;
+      const localRoute = url.origin === window.location.origin ? resolveRoute(url.pathname, url.search, url.hash) : null;
 
       event.preventDefault();
 
@@ -362,6 +381,12 @@ export default function LegacyPage({ source }) {
       container.removeEventListener('click', handleProductCardClick, true);
     };
   }, [navigate, markup]);
+
+  useEffect(() => {
+    if (isReady && location.hash) {
+      scrollToHash(location.hash);
+    }
+  }, [isReady, location.hash, markup]);
 
   if (error) {
     return (
