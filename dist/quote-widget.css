@@ -8,6 +8,9 @@
   min-height:100vh;
 }
 #mmm-quote{
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
   width:100% !important;
   padding-top:clamp(72px, 7.5vw, 128px) !important;
 }
@@ -33,7 +36,7 @@ main:has(.collection-search-app){ overflow: visible !important; }
   .collection-search-app__left-panel.mmm-quote-host{
     position:static; max-height:none; overflow:visible;
   }
-  #mmm-quote{ padding-top:24px !important; }
+  #mmm-quote{ min-height:auto; padding-top:24px !important; }
 }
 #mmm-quote{ font-family:inherit; color:#1d1d1b; }
 #mmm-quote *{ box-sizing:border-box; }
@@ -67,10 +70,9 @@ main:has(.collection-search-app){ overflow: visible !important; }
 #mmm-quote .q-totals{ margin-top:14px; padding-top:12px; border-top:2px solid #1d1d1b; font-size:13px; }
 #mmm-quote .q-totals .q-row{ display:flex; justify-content:space-between; margin:4px 0; }
 #mmm-quote .q-totals .q-grand{ font-size:18px; font-weight:700; margin-top:8px; }
-#mmm-quote .q-actions{ display:flex; gap:8px; margin-top:16px; }
-#mmm-quote .q-actions button{ flex:1; padding:12px; border:0; border-radius:6px; cursor:pointer; font-size:14px; font-weight:600; }
-#mmm-quote .q-print{ background:#1d1d1b; color:#fff; }
-#mmm-quote .q-clear{ background:#efefef; color:#444; }
+#mmm-quote .q-actions{ background:linear-gradient(180deg, rgba(250,250,250,0), #fafafa 24px); bottom:0; display:flex; margin:16px -24px 0; margin-top:auto; padding:24px 24px 16px; position:sticky; z-index:20; }
+#mmm-quote .q-actions button{ flex:1; padding:14px 12px; border:0; border-radius:0; cursor:pointer; font-size:14px; font-weight:700; }
+#mmm-quote .q-order{ background:#1d1d1b; color:#fff; }
 #mmm-quote .q-none{ padding:24px 0; font-size:13px; color:#bbb; text-align:center; }
 
 /* Printable quote sheet (hidden on screen) */

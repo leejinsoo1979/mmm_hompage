@@ -57,8 +57,7 @@
       '<div class="q-results" id="q-results"></div></div>' +
       '<div class="q-items" id="q-items"></div>' +
       '<div class="q-totals" id="q-totals"></div>' +
-      '<div class="q-actions"><button class="q-print" id="q-print">인쇄 / PDF 저장</button>' +
-      '<button class="q-clear" id="q-clear">비우기</button></div>';
+      '<div class="q-actions"><button class="q-order" id="q-order">주문하기</button></div>';
 
     els.search = host.querySelector('#q-search');
     els.results = host.querySelector('#q-results');
@@ -70,10 +69,7 @@
     document.addEventListener('click', function (e) {
       if (!els.results.contains(e.target) && e.target !== els.search) els.results.classList.remove('open');
     });
-    host.querySelector('#q-print').addEventListener('click', printQuote);
-    host.querySelector('#q-clear').addEventListener('click', function () {
-      if (items.length && confirm('견적 내역을 모두 비울까요?')) { items = []; save(); renderItems(); }
-    });
+    host.querySelector('#q-order').addEventListener('click', orderQuote);
     installCatalogueCartCapture();
     renderItems();
   }
@@ -207,6 +203,18 @@
       '<div class="q-row"><span>공급가액</span><span>' + fmt(t.net) + '</span></div>' +
       '<div class="q-row"><span>부가세 (VAT 10%)</span><span>' + fmt(t.vat) + '</span></div>' +
       '<div class="q-row q-grand"><span>합계</span><span>' + fmt(t.gross) + '</span></div>';
+  }
+
+  function orderQuote() {
+    if (!items.length) { alert('담은 제품이 없습니다.'); return; }
+    var t = totals();
+    var lines = items.map(function (it) {
+      var p = BYID[it.id]; if (!p) return '';
+      return '- ' + clean(p.n || p.id) + ' / ' + clean(p.c) + (p.f ? ' / ' + p.f : '') + ' / ' + p.id + ' / 수량 ' + it.qty;
+    }).filter(Boolean);
+    var subject = encodeURIComponent('Estimate order request');
+    var body = encodeURIComponent(lines.join('\n') + '\n\n합계(VAT 포함): ' + fmt(t.gross));
+    window.location.href = 'mailto:contact@mmm.com?subject=' + subject + '&body=' + body;
   }
 
   function printQuote() {
