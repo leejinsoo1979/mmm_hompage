@@ -7,6 +7,7 @@
   var RATE = 1500;                   // base price → ₩ multiplier (internal; adjust here)
   var PRODUCTS = [], BYID = {};
   var items = [];                    // [{id, qty}]
+  var cartCaptureInstalled = false;
 
   try { items = JSON.parse(localStorage.getItem(ITEMS_KEY)) || []; } catch (e) { items = []; }
 
@@ -15,6 +16,7 @@
   function fmt(n) { return '₩' + Math.round(n).toLocaleString('ko-KR'); }
   function clean(s) { return (s || '').replace(/\s+/g, ' ').trim(); }
   function esc(s) { return (s || '').replace(/[&<>"]/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]; }); }
+  function attrEsc(s) { return esc(s).replace(/'/g, '&#39;'); }
 
   fetch('/zl/quote-products.json')
     .then(function (r) { return r.json(); })
@@ -72,6 +74,7 @@
     host.querySelector('#q-clear').addEventListener('click', function () {
       if (items.length && confirm('견적 내역을 모두 비울까요?')) { items = []; save(); renderItems(); }
     });
+    installCatalogueCartCapture();
     renderItems();
   }
 
@@ -100,11 +103,55 @@
     });
   }
 
-  function addItem(id) {
+  function findProductCard(node) {
+    if (node.closest) {
+      var card = node.closest('.product-group__item');
+      if (card && card.querySelector('a[data-product-id]')) return card;
+    }
+
+    while (node && node !== document) {
+      if (node.querySelector && node.querySelector('a[data-product-id]')) return node;
+      node = node.parentNode;
+    }
+    return null;
+  }
+
+  function getProductImageFromCard(card) {
+    var img = card && card.querySelector('a[data-product-id] img, img');
+    if (!img) return '';
+    return img.currentSrc || img.src || img.getAttribute('src') || '';
+  }
+
+  function installCatalogueCartCapture() {
+    if (cartCaptureInstalled) return;
+    cartCaptureInstalled = true;
+    document.addEventListener('click', function (e) {
+      var icon = e.target.closest && e.target.closest('.wishlist-item-icon');
+      if (!icon || icon.classList.contains('wishlist-item-icon__detailpage')) return;
+
+      var card = findProductCard(icon);
+      var link = card && card.querySelector('a[data-product-id]');
+      var id = link && link.getAttribute('data-product-id');
+      if (!id || !BYID[id]) return;
+
+      e.preventDefault();
+      e.stopPropagation();
+      if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+      addItem(id, { img: getProductImageFromCard(card) });
+    }, true);
+  }
+
+  function addItem(id, meta) {
     var ex = items.filter(function (it) { return it.id === id; })[0];
-    if (ex) ex.qty++; else items.push({ id: id, qty: 1 });
+    if (ex) {
+      ex.qty++;
+      if (meta && meta.img && !ex.img) ex.img = meta.img;
+    } else {
+      items.push({ id: id, qty: 1, img: meta && meta.img ? meta.img : '' });
+    }
     save();
-    els.search.value = ''; els.results.classList.remove('open');
+    if (els.search) els.search.value = '';
+    if (els.results) els.results.classList.remove('open');
     renderItems();
   }
   function setQty(id, q) {
@@ -133,14 +180,17 @@
     els.items.innerHTML = items.map(function (it) {
       var p = BYID[it.id]; if (!p) return '';
       var amt = won(p.p) * it.qty;
+      var img = it.img || p.img || p.image || '';
       return '<div class="q-item" data-id="' + esc(it.id) + '">' +
+        '<div class="q-i-img">' + (img ? '<img src="' + attrEsc(img) + '" alt="' + attrEsc(p.n || p.id) + '" loading="lazy">' : '') + '</div>' +
+        '<div class="q-i-main">' +
         '<div class="q-i-n">' + esc(p.n || p.id) + '</div>' +
         '<div class="q-i-f">' + esc(clean(p.c)) + (p.f ? ' · ' + esc(p.f) : '') + ' · ' + esc(p.id) + '</div>' +
         '<div class="q-i-ctl"><div class="q-qty">' +
         '<button data-act="dec">−</button><input type="number" min="1" value="' + it.qty + '">' +
         '<button data-act="inc">+</button></div>' +
         '<button class="q-i-rm" data-act="rm">삭제</button>' +
-        '<span class="q-i-amt">' + fmt(amt) + '</span></div></div>';
+        '<span class="q-i-amt">' + fmt(amt) + '</span></div></div></div>';
     }).join('');
 
     Array.prototype.forEach.call(els.items.querySelectorAll('.q-item'), function (row) {
