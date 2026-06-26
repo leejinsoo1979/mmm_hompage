@@ -77,3 +77,8 @@ body {
 .ccm-page .wishlist-item-icon .fa-heart::before {
   content: "\f07a" !important;
 }
+
+.ccm-page .wishlist-item-icon .fa-heart,
+.ccm-page .wishlist-item-icon .fa-shopping-cart {
+  font-size: 1.2em;
+}

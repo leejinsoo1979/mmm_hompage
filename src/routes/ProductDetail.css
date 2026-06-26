@@ -40,7 +40,7 @@
 
 .product-detail-react .product-detail-react__cart {
   display: inline-block;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 10px;
   transform: translateY(1px);
 }
