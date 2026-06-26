@@ -19,3 +19,57 @@ body {
 .react-error h1 {
   margin: 0 0 12px;
 }
+
+.ccm-page .sticky-nav__menu a {
+  display: inline-block;
+  height: 1.6em;
+  overflow: hidden;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.ccm-page .sticky-nav__menu a span {
+  display: inline-block;
+  position: relative;
+  transition: none;
+  white-space: nowrap;
+}
+
+.ccm-page .sticky-nav__menu a span::before {
+  content: attr(data-hover);
+  font-family: "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", Arial, sans-serif;
+  font-size: .92em;
+  font-weight: 600;
+  left: 50%;
+  min-width: max-content;
+  position: absolute;
+  text-align: center;
+  top: 100%;
+  transform: translateX(-50%) translateZ(0);
+}
+
+.ccm-page .sticky-nav__menu a span::after {
+  content: attr(data-hover);
+  display: block;
+  font-family: "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", Arial, sans-serif;
+  font-size: .92em;
+  font-weight: 600;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  white-space: nowrap;
+}
+
+.ccm-page .sticky-nav__menu a:focus span,
+.ccm-page .sticky-nav__menu a:hover span {
+  transform: translateY(-100%);
+  transition: transform .3s;
+}
+
+.ccm-page .logo,
+.ccm-page.page-template-home .logo {
+  left: 5vw !important;
+  position: fixed !important;
+  top: 3.7vw !important;
+  z-index: 10;
+}

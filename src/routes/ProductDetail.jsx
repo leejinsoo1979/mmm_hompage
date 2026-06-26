@@ -188,28 +188,34 @@ function BrandLogo() {
   );
 }
 
+const navItems = [
+  { path: '/products/Catalogue#category-hardware', label: 'hardware', hoverLabel: '하드웨어' },
+  { path: '/products/Catalogue#category-pannel', label: 'pannel', hoverLabel: '패널' },
+  { path: '/products/Catalogue#category-presbevel', label: 'pressbevel', hoverLabel: '프레스베벨' },
+  { path: '/products/Catalogue#category-antipress', label: 'antipress', hoverLabel: '안티프레스' },
+  { path: '/products/Catalogue#category-bathmatch', label: 'bathmatch', hoverLabel: '바스매치' },
+  { path: '/products/Catalogue#category-stable-core', label: 'stable core', hoverLabel: '스테이블 코어' }
+];
+
 function Header({ detailPath }) {
   return (
     <>
       <BrandLogo />
       <div className="sticky-nav__short-links hlink">
-        <Link to="/catalogue-request?bron=Webheader"><span data-hover="Get catalogue">Get catalogue</span></Link>
-        <br />
-        <Link to="/wishlist?nooverlay=true"><span id="wishlistmenu" className="formani-wishlist-menu" data-orgtext="Wishlist" data-hover="Wishlist">Wishlist</span></Link>
         <a id="wishlist-nav-inlog" className="active formani-login-btn" href="#login"><span data-hover="Login">Login</span></a>
-        <a id="wishlist-nav-uitlog" className="formani-logout-btn" href="#logout"><span data-hover="Logout">Logout</span></a>
       </div>
       <header className="sticky-nav container-fluid">
         <nav>
           <div />
           <div className="sticky-nav__menu">
             <ul>
-              <li><Link to="/products/Catalogue#category-hardware">hardware</Link></li>
-              <li><Link to="/products/Catalogue#category-pannel">pannel</Link></li>
-              <li><Link to="/products/Catalogue#category-presbevel">pressbevel</Link></li>
-              <li><Link to="/products/Catalogue#category-antipress">antipress</Link></li>
-              <li><Link to="/products/Catalogue#category-bathmatch">bathmatch</Link></li>
-              <li><Link to="/products/Catalogue#category-stable-core">stable core</Link></li>
+              {navItems.map((item) => (
+                <li key={item.path}>
+                  <Link to={item.path}>
+                    <span data-hover={item.hoverLabel}>{item.label}</span>
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
           <div className="sticky-nav__toggle">

@@ -15,8 +15,49 @@ const allowedRoutes = new Set([
   '/about-us/points-sale'
 ]);
 
+const navHoverLabels = new Map([
+  ['hardware', '하드웨어'],
+  ['pannel', '패널'],
+  ['pressbevel', '프레스베벨'],
+  ['antipress', '안티프레스'],
+  ['bathmatch', '바스매치'],
+  ['stable core', '스테이블 코어']
+]);
+
 function normalizePath(pathname) {
   return pathname.replace(/\/index\.html$/, '').replace(/\.html$/, '').replace(/\/$/, '') || '/';
+}
+
+function applyKoreanNavHover(doc) {
+  doc.querySelectorAll('.sticky-nav__menu a').forEach((link) => {
+    const label = link.textContent?.replace(/\s+/g, ' ').trim();
+    const hoverLabel = navHoverLabels.get(label);
+
+    if (!hoverLabel) {
+      return;
+    }
+
+    const span = link.querySelector('span') || doc.createElement('span');
+    span.textContent = label;
+    span.setAttribute('data-hover', hoverLabel);
+
+    if (!span.parentElement) {
+      link.textContent = '';
+      link.appendChild(span);
+    }
+  });
+}
+
+function keepOnlyLoginShortLink(doc) {
+  doc.querySelectorAll('.sticky-nav__short-links').forEach((container) => {
+    const loginLink = container.querySelector('#wishlist-nav-inlog');
+
+    if (!loginLink) {
+      return;
+    }
+
+    container.replaceChildren(loginLink);
+  });
 }
 
 function resolveRoute(pathname, search = '', hash = '') {
@@ -299,6 +340,9 @@ export default function LegacyPage({ source }) {
           ...Array.from(doc.head.querySelectorAll('script')),
           ...Array.from(doc.body.querySelectorAll('script'))
         ];
+
+        applyKoreanNavHover(doc);
+        keepOnlyLoginShortLink(doc);
 
         document.title = doc.title || 'made make material React Mirror';
         doc.head.querySelectorAll('meta').forEach(addMetaNode);
