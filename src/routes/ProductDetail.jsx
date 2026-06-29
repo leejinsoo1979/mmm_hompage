@@ -191,8 +191,8 @@ function BrandLogo() {
 const navItems = [
   { path: '/products/Catalogue#category-hardware', label: 'hardware', hoverLabel: '하드웨어' },
   { path: '/products/Catalogue#category-pannel', label: 'pannel', hoverLabel: '패널' },
-  { path: '/products/Catalogue#category-presbevel', label: 'pressbevel', hoverLabel: '프레스베벨' },
-  { path: '/products/Catalogue#category-antipress', label: 'antipress', hoverLabel: '안티프레스' },
+  { path: '/products/Catalogue#category-presbevel', label: 'pressbevel', hoverLabel: '마루재' },
+  { path: '/products/Catalogue#category-antipress', label: 'antipress', hoverLabel: '장판' },
   { path: '/products/Catalogue#category-bathmatch', label: 'bathmatch', hoverLabel: '바스매치' },
   { path: '/products/Catalogue#category-stable-core', label: 'stable core', hoverLabel: '스테이블 코어' }
 ];

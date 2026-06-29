@@ -18,8 +18,8 @@ const allowedRoutes = new Set([
 const navHoverLabels = new Map([
   ['hardware', '하드웨어'],
   ['pannel', '패널'],
-  ['pressbevel', '프레스베벨'],
-  ['antipress', '안티프레스'],
+  ['pressbevel', '마루재'],
+  ['antipress', '장판'],
   ['bathmatch', '바스매치'],
   ['stable core', '스테이블 코어']
 ]);
