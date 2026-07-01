@@ -40,7 +40,21 @@
       "Bash(sips -g pixelWidth -g pixelHeight -g hasAlpha formani.com/favicon-32x32.png)",
       "Bash(git -c user.name=\"jinsoo\" -c user.email=\"sbbc212@gmail.com\" commit -q -m \"Favicon: replace with llllll bar symbol \\(svg adaptive + 16/32/apple-touch png\\)\")",
       "Bash(git -c user.name=\"jinsoo\" -c user.email=\"sbbc212@gmail.com\" commit -q -m \"Logo: widen gap between bar symbol and wordmark\")",
-      "Bash(git -c user.name=\"jinsoo\" -c user.email=\"sbbc212@gmail.com\" commit -q -m \"Add full logo lockup fixed at bottom-right \\(mix-blend for any background\\)\")"
+      "Bash(git -c user.name=\"jinsoo\" -c user.email=\"sbbc212@gmail.com\" commit -q -m \"Add full logo lockup fixed at bottom-right \\(mix-blend for any background\\)\")",
+      "Bash(sips -g hasAlpha -g pixelWidth formani.com/favicon-32x32.png)",
+      "Bash(curl -s \"https://mmm-hompage.vercel.app/favicon.svg?cb=$\\(date +%s\\)\")",
+      "Bash(grep -iE \"\\\\.html$|brand-story\")",
+      "Bash(git -c user.name=\"jinsoo\" -c user.email=\"sbbc212@gmail.com\" commit -q -m \"Brand story: header logo links to home \\(target=_top to break out of iframe\\)\")",
+      "Bash(curl -s \"https://mmm-hompage.vercel.app/brand-story/index.html?cb=$\\(date +%s\\)\")",
+      "Bash(git -c user.name=\"jinsoo\" -c user.email=\"sbbc212@gmail.com\" commit -q -m \"Brand story: force top-window nav to home on logo click \\(Next Link intercepts target=_top\\)\")",
+      "Bash(curl -s \"http://127.0.0.1:5173/_next/static/css/d78ea2edcc991c8e.css\")",
+      "Bash(grep -iE \"header\\\\.nav ?\\\\{|\\\\.brandmark ?\\\\{|\\\\.brandmark,|pointer-events|z-index\")",
+      "Bash(git -c user.name=\"jinsoo\" -c user.email=\"sbbc212@gmail.com\" commit -q -m \"Brand story: parent intercepts logo click \\(capture phase\\) to navigate top window home\")",
+      "Bash(git -c user.name=\"jinsoo\" -c user.email=\"sbbc212@gmail.com\" commit -q -m \"Fix nav/category label typo: presbevel -> pressbevel \\(display text only, links unchanged\\)\")",
+      "Bash(git fetch *)",
+      "Bash(git rev-list *)",
+      "Bash(awk '{print $NF}')",
+      "Bash(awk '{print $5, $NF}')"
     ]
   }
 }
